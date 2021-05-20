@@ -1,11 +1,24 @@
-// Defining text characters for the empty and full hearts for you to use later.
 const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
+const heartGlyph = () => document.querySelectorAll('.like-glyph');
+const modalMessage = () => document.querySelector('#modal-message');
 
-// Your JavaScript code goes here!
-
-
-
+heartGlyph().forEach(heart => heart.addEventListener('click', function(event) {
+  mimicServerCall()
+  .then(miniResponse => {
+    console.log(miniResponse)
+    event.target.innerText == EMPTY_HEART ? event.target.innerText = FULL_HEART : event.target.innerText = EMPTY_HEART;
+  })
+  .catch(thisIsAnError => {
+    console.log(thisIsAnError) 
+    modalMessage().innerText = thisIsAnError;
+    console.log(modalMessage())
+    document.querySelector("#modal").classList.remove('hidden');
+    setTimeout(function(){ 
+      document.querySelector("#modal").classList.add('hidden');
+    }, 5000);
+  })
+}))
 
 //------------------------------------------------------------------------------
 // Don't change the code below: this function mocks the server response
